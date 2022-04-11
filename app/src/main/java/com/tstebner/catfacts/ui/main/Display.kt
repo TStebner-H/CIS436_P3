@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.tstebner.catfacts.databinding.FragmentDisplayBinding
+import org.json.JSONObject
 
 class Display : Fragment() {
     private lateinit var binding: FragmentDisplayBinding
@@ -31,5 +32,9 @@ class Display : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
+    fun updateDisplay(content: JSONObject) {
+
     }
 }

@@ -1,5 +1,6 @@
 package com.tstebner.catfacts.ui.main
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,13 +10,31 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.tstebner.catfacts.databinding.FragmentSpinnerBinding
+import org.json.JSONObject
+import java.lang.ClassCastException
 
 class Spinner : Fragment() {
 
     private lateinit var binding: FragmentSpinnerBinding
     private lateinit var viewModel: MainViewModel
+    private var activityCallback : Spinner.SpinnerListener? = null
 
     private var breedArr = arrayListOf<String>("Choose Breed:")
+
+    interface SpinnerListener {
+        fun onBreedSelect(content: JSONObject)
+    }
+
+    override fun onAttach(context : Context) {
+        super.onAttach(context)
+
+        try {
+            activityCallback = context as SpinnerListener
+        }
+        catch (e : ClassCastException){
+            throw ClassCastException("$context must implement SpinnerListener")
+        }
+    } // end onAttach
 
     companion object {
         fun newInstance() = Spinner()
@@ -54,5 +73,9 @@ class Spinner : Fragment() {
             activity?.let { ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, breedArr) }
 
         binding.spinnerBreed.adapter = arrayAdapter
+    }
+
+    private fun breedSelect(content: JSONObject) {
+        activityCallback?.onBreedSelect(content)
     }
 }
