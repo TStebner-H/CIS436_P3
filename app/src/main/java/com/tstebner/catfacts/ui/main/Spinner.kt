@@ -12,6 +12,11 @@ import android.widget.ArrayAdapter
 import com.tstebner.catfacts.databinding.FragmentSpinnerBinding
 import org.json.JSONObject
 import java.lang.ClassCastException
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONArray
 
 class Spinner : Fragment() {
 
