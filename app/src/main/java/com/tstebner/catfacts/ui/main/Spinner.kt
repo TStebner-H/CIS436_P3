@@ -25,6 +25,7 @@ class Spinner : Fragment() {
     private var activityCallback : Spinner.SpinnerListener? = null
 
     private var breedArr = arrayListOf<String>("Choose Breed:")
+    private var breeds = arrayListOf<String>()
 
     interface SpinnerListener {
         fun onBreedSelect(content: JSONObject)
@@ -82,5 +83,12 @@ class Spinner : Fragment() {
 
     private fun breedSelect(content: JSONObject) {
         activityCallback?.onBreedSelect(content)
+    }
+
+    fun setContent(content: JSONArray) {
+        for (i in 0 until content.length()) {
+            val item = content.getJSONObject(i)
+//            breeds.add(item.get("title"))
+        }
     }
 }
