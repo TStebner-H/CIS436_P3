@@ -35,6 +35,15 @@ class Display : Fragment() {
     }
 
     fun updateDisplay(content: JSONObject) {
+        var description = "${content.get("description").toString()}\nOrigin: ${content.get("origin").toString()}\nLife span: ${content.get("life_span").toString()} years\nWeight: ${content.getJSONObject("weight").get("imperial").toString()}\nAffection Level: ${content.get("affection_level").toString()}"
+        description += if (content.getInt("hypoallergenic") == 0) {
+            "\nHypoallergenic: No"
+        } else {
+            "\nHypoallergenic: Yes"
+        }
+        description += "\nWikipedia URL:\n${content.get("wikipedia_url").toString()}"
+        binding.textView.text = description
 
+        val imgJSON = content.getJSONObject("image")
     }
 }
