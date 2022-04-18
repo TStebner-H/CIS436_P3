@@ -60,14 +60,16 @@ class Spinner : Fragment() {
     ): View {
         binding = FragmentSpinnerBinding.inflate(inflater, container, false)
         setAdapter()
-
         return binding.root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        setAdapter()
         binding.spinnerBreed.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 Log.d("SpinnerFragment","in onNothingSelected")

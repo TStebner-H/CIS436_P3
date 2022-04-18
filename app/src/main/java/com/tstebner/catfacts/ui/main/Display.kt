@@ -58,7 +58,7 @@ class Display : Fragment() {
             },
             imgJSON.getInt("width"),
             imgJSON.getInt("height"),
-            ImageView.ScaleType.CENTER_CROP,
+            ImageView.ScaleType.FIT_START,
             Bitmap.Config.ARGB_8888,
             { error ->
                 Log.d("DisplayFragment",error.message.toString())
