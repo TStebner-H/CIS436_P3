@@ -1,11 +1,16 @@
 package com.tstebner.catfacts.ui.main
 
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
+import com.android.volley.toolbox.ImageRequest
+import com.android.volley.toolbox.Volley
 import com.tstebner.catfacts.databinding.FragmentDisplayBinding
 import org.json.JSONObject
 
@@ -35,7 +40,7 @@ class Display : Fragment() {
     }
 
     fun updateDisplay(content: JSONObject) {
-        var description = "${content.get("description").toString()}\nOrigin: ${content.get("origin").toString()}\nLife span: ${content.get("life_span").toString()} years\nWeight: ${content.getJSONObject("weight").get("imperial").toString()}\nAffection Level: ${content.get("affection_level").toString()}"
+        var description = "${content.get("description").toString()}\nOrigin: ${content.get("origin").toString()}\nLife span: ${content.get("life_span").toString()} years\nWeight: ${content.getJSONObject("weight").get("imperial").toString()} Lbs\nAffection Level: ${content.get("affection_level").toString()}"
         description += if (content.getInt("hypoallergenic") == 0) {
             "\nHypoallergenic: No"
         } else {
@@ -45,5 +50,20 @@ class Display : Fragment() {
         binding.textView.text = description
 
         val imgJSON = content.getJSONObject("image")
+        val queue = Volley.newRequestQueue(activity?.applicationContext)
+        val imageRequest = ImageRequest(
+            imgJSON.getString("url"),
+            {bitmap ->
+                binding.imageView.setImageBitmap(bitmap)
+            },
+            imgJSON.getInt("width"),
+            imgJSON.getInt("height"),
+            ImageView.ScaleType.CENTER_CROP,
+            Bitmap.Config.ARGB_8888,
+            { error ->
+                Log.d("DisplayFragment",error.message.toString())
+            }
+        )
+        queue.add(imageRequest)
     }
 }
